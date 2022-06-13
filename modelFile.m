@@ -9,25 +9,29 @@ m = 0;
 
 %% Load data
 % Load initial measurements, sampling distance (icMesh) and measured values (icData)
-icMesh = [0 0.39 0.41 0.59 0.61 1];
-icData = [0.05 0.05 0.05 0.05 0.05 0.05; 0, 0, 1, 1, 0, 0; 1, 1, 0.2, 0.2, 1, 1; 1, 1, 1, 1, 1, 1];
 % Load fixed parameters theta*R on LHS and diffusivities D(z) on RHS
-yMesh = [0 0.2 0.3 0.6 0.8 1];
-data_Deff = [0.5 0.6 0.7 0.8 0.6 0.5; 0.5 0.6 0.7 0.8 0.6 0.5; 0.5 0.6 0.7 0.8 0.6 0.5; 0 0 0 0 0 0]; % Define a matrix data_Deff of sampling values vectors v1..v4
-data_thetaR = [0.5 0.6 0.7 0.8 0.6 0.5; 0.5 0.6 0.7 0.8 0.6 0.5; 0.5 0.6 0.7 0.8 0.6 0.5; 1 1 1 1 1 1];  
+ICdata;
 % Load parameters
 par=[0.2 0.2 0.8];
 % paramters;
+
+%%
 % Solve the pde system
 sol = pdepe(m,@(x,t,u,dudx)pdefun(x,t,u,dudx,yMesh,data_thetaR, data_Deff,par),@(x)pdeic(x,icMesh,icData),@pdebc,x,t);
-
+%%
 u1 = sol(:,:,1);
 u2 = sol(:,:,2);
 u3 = sol(:,:,3);
 u4 = sol(:,:,4);
-
+u5 = sol(:,:,5);
+u6 = sol(:,:,6);
+u7 = sol(:,:,7);
+u8 = sol(:,:,8);
+u9 = sol(:,:,9);
 %% plotting
-figFun(x,u1,u2,u3,u4);
+figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9);
+
+%%
 % filename = sprintf('CO2.gif');
 % h=figure;
 % firstrun=1;
