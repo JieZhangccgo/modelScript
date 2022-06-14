@@ -1,10 +1,10 @@
 close all;clear;clc
 %%
 % SCRIPT FILE FOR RUNNING THE REACTIVE TRANSPORT MODEL (a.k.a. the respiration-nitrification-denitrification model)
-% AUTHOR: JIE ZHANG 
+% AUTHOR: JIE ZHANG jiezh@agro.au.dk
 %% Discretize space and define the output time invertals
 x = linspace(0,1,25);
-t = linspace(0,0.2,20);% output time interval
+t = linspace(0,2,20);% output time interval
 m = 0;
 
 %% Load data
@@ -19,17 +19,42 @@ par=[0.2 0.2 0.8];
 % Solve the pde system
 sol = pdepe(m,@(x,t,u,dudx)pdefun(x,t,u,dudx,yMesh,data_thetaR, data_Deff,par),@(x)pdeic(x,icMesh,icData),@pdebc,x,t);
 %%
-u1 = sol(:,:,1);
+u1 = sol(:,:,1); %CO2--1
 u2 = sol(:,:,2);
-u3 = sol(:,:,3);
+u3 = sol(:,:,3); %O2--3
 u4 = sol(:,:,4);
 u5 = sol(:,:,5);
 u6 = sol(:,:,6);
 u7 = sol(:,:,7);
-u8 = sol(:,:,8);
+u8 = sol(:,:,8); %N2O--8
 u9 = sol(:,:,9);
+u10 = sol(:,:,10); %N2--10
+u11 = sol(:,:,11);
 %% plotting
-figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9);
+figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11);
+
+%% Gas emission rate
+% flux = Deff/dx*dc
+D = 1;
+dt = t(2);
+J_CO2 = 2*D*(u1(:,2) - u1(:,1))/dt;
+J_N2O = 2*D*(u8(:,2) - u8(:,1))/dt;
+J_N2 = 2*D*(u10(:,2) - u10(:,1))/dt;
+
+figure(2);
+subplot(2,2,1)
+plot(t, J_CO2);
+
+subplot(2,2,2)
+plot(t, J_N2O);
+
+subplot(2,2,3)
+plot(t, J_N2);
+
+subplot(2,2,4)
+plot(t, J_N2O);
+hold on
+plot(t, J_N2);
 
 %%
 % filename = sprintf('CO2.gif');

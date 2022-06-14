@@ -23,9 +23,15 @@ u1 = sol(:,:,1);
 u2 = sol(:,:,2);
 u3 = sol(:,:,3);
 u4 = sol(:,:,4);
-
+u5 = sol(:,:,5);
+u6 = sol(:,:,6);
+u7 = sol(:,:,7);
+u8 = sol(:,:,8);
+u9 = sol(:,:,9);
+u10 = sol(:,:,10);
+u9 = sol(:,:,11);
 %% plotting
-figFun(x,u1,u2,u3,u4);
+figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9);
 
 %%
 % filename = sprintf('CO2.gif');
