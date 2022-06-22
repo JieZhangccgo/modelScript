@@ -1,6 +1,7 @@
 %% Code Equations
 % Formulate a system of 11 PDE/ODE equations. 8 partial differential equations (CO2, DOC, O2, NH4, NO2, NO3, N2O, N2) and 3 odinary differential equations (b1,b2,b3).
 % independent varibales x and t, dependent variable u.
+% x [m], t [h], u [mmol/L]
 % indexes of vector u. 1: CO2, 2: DOC, 3: O2, 4: b1, 5: NH4, 6: NO2, 7: NO3, 8: N2O, 9: b2, 10: N2, 11: b3.
 % INPUTS: 
 % yMesh: sample points for thetaR and Deff. 
@@ -10,16 +11,26 @@
 % par: parameters involved in reactions.
 % Use interp1 to interpolate data_thetaR(x) and data_Deff(x) to the grid point x for which the solver requires information.
 %%
-function [c,f,s] = pdefun(x,t,u,dudx,yMesh,data_thetaR, data_Deff,par) % Equation to solve
+function [c,f,s] = pdefun(x,t,u,dudx,msInfo,par) % Equation to solve
 ku2=par(1);
 ku3=par(2);
 kI = ku3;
 y_resp = par(3);
 y_nit = par(3);
 y_denit = par(3);
-thetaR = interp1(yMesh,data_thetaR',x,'pchip')';% a function of x, returning interpolated values of thetaR at x for 11 components
-c = thetaR;
-D = interp1(yMesh,data_Deff',x,'pchip')';% a function of x, returning interpolated values of Deff at x for 11 components
+
+yMesh = msInfo.yMesh;
+thetaData = msInfo.thetaData;
+N_NH4 = msInfo.N_NH4;
+KF_NH4 = msInfo.KF_NH4;
+rhob = msInfo.rhob;
+Deff = msInfo.Deff;
+
+theta = interp1(yMesh,thetaData',x,'pchip')';% a function of x, returning interpolated values of thetaR at x for 11 components
+FreuC_NH4 = KF_NH4 * N_NH4 * (18*u(5)).^(N_NH4-1); %KF[mg/kg][L/mg]^N, NH4 molar conc: u[mmol/L], NH4 molar mass: 18[mg/mmol], NH4 mass conc:(18*x)[mg/L]
+R_NH4 = 1 + rhob./theta(5).*FreuC_NH4; %rhob = 1.25[kg/L soil], FreuC_NH4 [L/kg]
+c = theta.*[1 1 1 1 R_NH4 1 1 1 1 1 1]';
+D = interp1(yMesh,Deff',x,'pchip')';% a function of x, returning interpolated values of Deff at x for 11 components
 f = D.*dudx;
 S_CO2pr = u(4).*u(2)./(ku2+u(2)).*u(3)./(ku3+u(3)); % CO2 production rate
 S_NO2pr_n = u(9).*u(5)./(ku2+u(5)).*u(3)./(ku3+u(3)); % NO2 production rate from nitrification.

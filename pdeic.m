@@ -7,6 +7,6 @@
 % method 'pchip': shape-preserving piecewise cubic interpolation.
 
 %% write a function that returns the initial condition
-function u0 = pdeic(x,icMesh,icData) 
-u0 = interp1(icMesh,icData',x,'pchip')';
+function u0 = pdeic(x,msInfo) 
+u0 = interp1(msInfo.icMesh,msInfo.icData',x,'pchip')';
 

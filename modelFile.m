@@ -10,14 +10,14 @@ m = 0;
 %% Load data
 % Load initial measurements, sampling distance (icMesh) and measured values (icData)
 % Load fixed parameters theta*R on LHS and diffusivities D(z) on RHS
-ICdata;
+measInfo; % load measurement data structure msInfo
 % Load parameters
 par=[0.2 0.2 0.8];
 % paramters;
 
 %%
 % Solve the pde system
-sol = pdepe(m,@(x,t,u,dudx)pdefun(x,t,u,dudx,yMesh,data_thetaR, data_Deff,par),@(x)pdeic(x,icMesh,icData),@pdebc,x,t);
+sol = pdepe(m,@(x,t,u,dudx)pdefun(x,t,u,dudx,msInfo,par),@(x)pdeic(x,msInfo),@pdebc,x,t);
 %%
 u1 = sol(:,:,1); %CO2--1
 u2 = sol(:,:,2);
