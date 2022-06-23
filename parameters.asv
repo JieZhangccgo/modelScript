@@ -54,7 +54,7 @@ u_N2_dn = 1 %mol g-1 h-1
 % u_dn = 1 %mol g-1 h-1
 
 % microbial biomass decomposers, nitrifiers, and denitirifers
-B_r = 1 %g/(g dw) 
+B_r = 1 %g/(g dw)
 B_n = 1 %g/(g dw)
 B_dn = 1 %g/(g dw)
 

@@ -12,7 +12,7 @@ m = 0;
 % Load fixed parameters theta*R on LHS and diffusivities D(z) on RHS
 measInfo; % load measurement data structure msInfo
 % Load parameters
-par=[0 0 0.08];
+par=[0.2 0.2 0.08];
 % paramters;
 
 %

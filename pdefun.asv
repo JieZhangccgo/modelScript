@@ -47,9 +47,9 @@ S_CO2pr = u(4).*ix_DOC.*u(2)./(ku2+ix_DOC.*u(2)).*ix_O2.*u(3)./(ku3+ix_O2.*u(3))
 S_NO2pr_n = u(9).*ix_NH4.*u(5)./(ku2+ix_NH4.*u(5)).*ix_O2.*u(3)./(ku3+ix_O2.*u(3)); % NO2 production rate from nitrification.
 S_NO3pr_n = u(9).*ix_NO2.*u(6)./(ku2+ix_NO2.*u(6)).*ix_O2.*u(3)./(ku3+ix_O2.*u(3)); % NO3 production rate from nit.
 S_N2Opr_n = u(9).*ix_NH4.*u(5)./(ku2+ix_NH4.*u(5)).*ix_O2.*u(3)./(ku3+ix_O2.*u(3)).*kI./(kI+ix_O2.*u(3)); % N2O production rate from nit.
-S_NO2pr_dn  = u(11).*ix_NO3.*u(7)./(ku2+ix_NO3.*u(7)).*ix_DOC.*u(2)./(ku3+ix_DOC.*u(2)).*kI./(kI+ix_O2.*u(3)); % NO2 production rate from denitrification.
-S_N2Opr_dn  = u(11).*ix_NO2.*u(6)./(ku2+ix_NO2.*u(6)).*ix_DOC.*u(2)./(ku3+ix_DOC.*u(2)).*kI./(kI+ix_O2.*u(3)); % N2O production rate from denit.
-S_N2pr_dn  = u(11).*ix_N2O.*u(8)./(ku2+ix_N2O.*u(8)).*ix_DOC.*u(2)./(ku3+ix_DOC.*u(2)).*kI./(kI+ix_O2.*u(3)); % N2 production rate from denit.
+S_NO2pr_dn  = u(11).*ix_NO3.*u(7)./(ku2+ix_NO3.*u(7)).*ix_DOC.*u(2)./(ku3+ix_DOC.*u(2)).*kI./(kI+(ix_O2.*u(3))); % NO2 production rate from denitrification.
+S_N2Opr_dn  = u(11).*u(6)./(ku2+u(6)).*u(2)./(ku3+u(2)).*kI./(kI+(ix_O2.*u(3))); % N2O production rate from denit.
+S_N2pr_dn  = u(11).*u(8)./(ku2+u(8)).*u(2)./(ku3+u(2)).*kI./(kI+(ix_O2.*u(3))); % N2 production rate from denit.
 
 s = [S_CO2pr;... %CO2--1
     -S_CO2pr;... %DOC--2
