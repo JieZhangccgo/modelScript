@@ -6,7 +6,14 @@
 % 
 
 %% physical parameters
-Do=1; %[m2/h]
+Do_NO2 = 24*5.20E-06; %24*[m2/h] aqueous
+Do_NO3 = 24*5.18E-06; %[m2/h] aqueous
+Do_NH4 = 24*5.33E-06; %[m2/h] aqueous
+Do_DOC = 24*2.64E-06; %[m2/h] aqueous
+Do_N2O = 24*5.69E-02; %[m2/h] gas
+Do_N2 = 24*7.09E-02; %[m2/h] gas
+Do_CO2 = 24*5.61E-02; %[m2/h] gas
+Do_O2 = 24*7.09E-02; %[m2/h] gas
 
 %% biotic parameters
 % Respiration, half-saturation rate

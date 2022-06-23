@@ -20,18 +20,18 @@ y_nit = par(3);
 y_denit = par(3);
 
 yMesh = msInfo.yMesh;
-thetaData = msInfo.thetaData;
+thetaMat = msInfo.thetaMat;
 N_NH4 = msInfo.N_NH4;
 KF_NH4 = msInfo.KF_NH4;
 rhob = msInfo.rhob;
-Deff = msInfo.Deff;
+DeffMat = msInfo.DeffMat;
 
-theta = interp1(yMesh,thetaData',x,'pchip')';% a function of x, returning interpolated values of thetaR at x for 11 components
-FreuC_NH4 = KF_NH4 * N_NH4 * (18*u(5)).^(N_NH4-1); %KF[mg/kg][L/mg]^N, NH4 molar conc: u[mmol/L], NH4 molar mass: 18[mg/mmol], NH4 mass conc:(18*x)[mg/L]
+theta = interp1(yMesh,thetaMat',x,'pchip')';% a function of x, returning interpolated values of thetaR at x for 11 components
+FreuC_NH4 = KF_NH4 * N_NH4 * (18*u(5)).^(N_NH4-1); %KF[mg/kg][L/mg]^N, NH4 molar conc: u(5)[mmol/L], NH4 molar mass: 18[mg/mmol], NH4 mass conc:(18*u(5))[mg/L]
 R_NH4 = 1 + rhob./theta(5).*FreuC_NH4; %rhob = 1.25[kg/L soil], FreuC_NH4 [L/kg]
 c = theta.*[1 1 1 1 R_NH4 1 1 1 1 1 1]';
-D = interp1(yMesh,Deff',x,'pchip')';% a function of x, returning interpolated values of Deff at x for 11 components
-f = D.*dudx;
+Deff = interp1(yMesh,DeffMat',x,'pchip')';% a function of x, returning interpolated values of Deff at x for 11 components
+f = Deff.*dudx;
 S_CO2pr = u(4).*u(2)./(ku2+u(2)).*u(3)./(ku3+u(3)); % CO2 production rate
 S_NO2pr_n = u(9).*u(5)./(ku2+u(5)).*u(3)./(ku3+u(3)); % NO2 production rate from nitrification.
 S_NO3pr_n = u(9).*u(6)./(ku2+u(6)).*u(3)./(ku3+u(3)); % NO3 production rate from nit.

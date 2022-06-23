@@ -3,19 +3,19 @@ close all;clear;clc
 % SCRIPT FILE FOR RUNNING THE REACTIVE TRANSPORT MODEL (a.k.a. the respiration-nitrification-denitrification model)
 % AUTHOR: JIE ZHANG jiezh@agro.au.dk
 %% Discretize space and define the output time invertals
-x = linspace(0,1,25);
-t = linspace(0,2,20);% output time interval
+x = linspace(0,0.1,51); % x[m] x = 10^(-3)*[0 20 32 36 40 44 48 52 56 60 64 68 80 100];
+t = 0:6/24:28;  %linspace(0, 28, 29);% t[h] output time interval
 m = 0;
 
-%% Load data
+% Load data
 % Load initial measurements, sampling distance (icMesh) and measured values (icData)
 % Load fixed parameters theta*R on LHS and diffusivities D(z) on RHS
 measInfo; % load measurement data structure msInfo
 % Load parameters
-par=[0.2 0.2 0.8];
+par=[0 0 0.08];
 % paramters;
 
-%%
+%
 % Solve the pde system
 sol = pdepe(m,@(x,t,u,dudx)pdefun(x,t,u,dudx,msInfo,par),@(x)pdeic(x,msInfo),@pdebc,x,t);
 %%
@@ -30,10 +30,10 @@ u8 = sol(:,:,8); %N2O--8
 u9 = sol(:,:,9);
 u10 = sol(:,:,10); %N2--10
 u11 = sol(:,:,11);
-%% plotting
+% plotting
 figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11);
 
-%% Gas emission rate
+% Gas emission rate
 % flux = Deff/dx*dc
 D = 1;
 dt = t(2);

@@ -8,16 +8,22 @@
 
 %% write a function that returns the boundary condition
 function [pl,ql,pr,qr] = pdebc(xl,ul,xr,ur,t) % Boundary Conditions
-pl = [ul(1)-0.05;... %CO2--1
+
+Catm_N2 = 33; %[mmol/L]
+Catm_O2 = 8.9; %[mmol/L]
+Catm_CO2 = 0.017; %[mmol/L]
+Catm_N2O = 1.4E-5; %[mmol/L]
+
+pl = [ul(1)-Catm_CO2;... %CO2--1
     0;... %DOC--2
-    ul(3)-1; ... %O2--3
+    ul(3)-Catm_O2; ... %O2--3
     0;... %b1, heterotroph--4
     0;... %NH4--5
     0;... %NO2--6
     0;... %NO3--7
-    ul(8)-0.01;... %N2O--8
+    ul(8)-Catm_N2O;... %N2O--8
     0; ...%b2, nit--9
-    ul(10)-0.01; ...%N2--10
+    ul(10)-Catm_N2; ...%N2--10
     0 ...%b3, denit--11
     ];
 
@@ -34,16 +40,16 @@ ql = [0; ... %CO2--1
     1 ...%b3, denit--11
     ];
 
-pr = [ur(1)-0.05; ... %CO2--1
+pr = [ur(1)-Catm_CO2; ... %CO2--1
     0; ... %DOC--2
-    ur(3)-1; ... %O2--3
+    ur(3)-Catm_O2; ... %O2--3
     0;... %b1, heterotroph--4
     0;... %NH4--5
     0;... %NO2--6
     0;... %NO3--7
-    ur(8)-0.01;... %N2O--8
+    ur(8)-Catm_N2O;... %N2O--8
     0; ...%b2, nit--9
-    ur(10)-0.01; ...%N2--10
+    ur(10)-Catm_N2; ...%N2--10
     0 ...%b3, denit--11
     ];
 qr = [0; ... %CO2--1
