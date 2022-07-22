@@ -37,9 +37,9 @@ figFun(x,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11);
 % flux = Deff/dx*dc
 D = 1;
 dt = t(2);
-J_CO2 = 2*D*(u1(:,2) - u1(:,1))/dt;
-J_N2O = 2*D*(u8(:,2) - u8(:,1))/dt;
-J_N2 = 2*D*(u10(:,2) - u10(:,1))/dt;
+J_CO2 = 2*D*(u1(:,2) - u1(:,1))/dz;
+J_N2O = 2*D*(u8(:,2) - u8(:,1))/dz;
+J_N2 = 2*D*(u10(:,2) - u10(:,1))/dz;
 
 figure(2);
 subplot(2,2,1)
